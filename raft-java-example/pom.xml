@@ -16,26 +16,22 @@
 
     <build>
         <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <targetPath>../conf</targetPath>
-                <includes>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.toml</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>false</filtering>
-                <targetPath>../conf</targetPath>
-                <excludes>
-                    <exclude>**/*.xml</exclude>
-                    <exclude>**/*.properties</exclude>
-                    <exclude>**/*.toml</exclude>
-                </excludes>
-            </resource>
+            <!--&lt;!&ndash; 将src/main/resources下对应配置文件复制到../conf，即实际是target/conf &ndash;&gt;-->
+            <!--<resource>-->
+            <!--    <directory>src/main/resources</directory>-->
+            <!--    &lt;!&ndash; 这个没用到放这里有点迷惑人 &ndash;&gt;-->
+            <!--    &lt;!&ndash;<filtering>true</filtering>&ndash;&gt;-->
+            <!--    <targetPath>../conf</targetPath>-->
+            <!--    &lt;!&ndash;<includes>&ndash;&gt;-->
+            <!--    &lt;!&ndash;    <include>**/*.xml</include>&ndash;&gt;-->
+            <!--    &lt;!&ndash;    <include>**/*.properties</include>&ndash;&gt;-->
+            <!--    &lt;!&ndash;    <include>**/*.toml</include>&ndash;&gt;-->
+            <!--    &lt;!&ndash;</includes>&ndash;&gt;-->
+            <!--</resource>-->
+            <!--&lt;!&ndash; 为了方便本地调试，在target/classes中保留一份 &ndash;&gt;-->
+            <!--<resource>-->
+            <!--    <directory>src/main/resources</directory>-->
+            <!--</resource>-->
         </resources>
 
         <testResources>
@@ -61,12 +57,39 @@
 
         <plugins>
             <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/conf</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.xml</include>
+                                        <include>**/*.properties</include>
+                                        <include>**/*.toml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

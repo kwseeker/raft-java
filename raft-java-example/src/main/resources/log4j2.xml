@@ -5,6 +5,10 @@
      to make all loggers asynchronous. -->
 
 <Configuration status="INFO">
+    <Properties>
+        <Property name="LOG_HOME">${env:LogHomeRoot}</Property>
+    </Properties>
+
     <Appenders>
 
         <Console name="Console" target="SYSTEM_OUT">
@@ -12,7 +16,7 @@
         </Console>
 
         <!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
-        <RollingFile name="RollingFile" fileName="logs/raft_example.log" immediateFlush="false"
+        <RollingFile name="RollingFile" fileName="${LOG_HOME}/logs/raft_example.log" immediateFlush="false"
                      bufferSize="65536"
                      filePattern="logs/raft_example.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout>
@@ -26,7 +30,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.github.wenweihu86.raft" level="info" additivity="false">
+        <Logger name="com.github.wenweihu86.raft" level="debug" additivity="false">
             <AppenderRef ref="Console" />
             <AppenderRef ref="RollingFile"/>
         </Logger>

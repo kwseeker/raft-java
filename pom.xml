@@ -20,4 +20,13 @@
         <module>raft-java-admin</module>
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>2.0.41</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
